@@ -7,7 +7,7 @@
 MYSQL_VERSION = '5.6.14-1'
 
 # remove default installed packages
-['mysql', 'mysql-devel', 'mysql-libs'].each do |pkg|
+%w{mysql mysql-devel mysql-libs}.each do |pkg|
   package pkg do
     action :remove
   end
@@ -26,4 +26,9 @@ mysql_packages.each do |pkg|
     provider Chef::Provider::Package::Rpm
     source "/tmp/#{filename}"
   end
+end
+
+# reinstall packages depended on mysql-libs.
+%w{sysstat cronie cronie-anacron crontabs postfix}.each do |pkg|
+  package pkg
 end
