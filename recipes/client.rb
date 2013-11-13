@@ -32,3 +32,7 @@ end
 %w{sysstat cronie cronie-anacron crontabs postfix}.each do |pkg|
   package pkg
 end
+
+service "crond" do
+  action :start
+end
